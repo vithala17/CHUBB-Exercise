@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,13 @@ namespace ReverseText
     {
         static void Main(string[] args)
         {
-            const string filePath = "TestTextFile.txt";
+            var path = Directory.GetCurrentDirectory();
+            var builder = new ConfigurationBuilder()
+                    .SetBasePath(path)
+                    .AddJsonFile("appsettings.json", false, true);
+            var config = builder.Build();
+
+            string filePath = config["FileRelativepath"] + "TestTextFile.txt";
             FileTextReverser textReverser = new FileTextReverser();
 
             string text = textReverser.ReverseFileContents(filePath);
@@ -32,6 +39,10 @@ namespace ReverseText
                 using (StreamReader reader = new StreamReader(filePath))
                 {
                     revText = reader.ReadToEnd();
+
+                    if (string.IsNullOrEmpty(revText) || revText.Length == 1)
+                        return revText;
+
                     var revTextArray = revText.ToCharArray();
                     Array.Reverse(revTextArray);
 
@@ -41,19 +52,8 @@ namespace ReverseText
                 // filePath = "OutputTextFile.txt";
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
-                    //writer.Write(newString);
-                    //writer.Flush();
-
-                    writer.WriteLine("C# Corner Authors");
-                    writer.WriteLine("==================");
-                    writer.WriteLine("Monica Rathbun");
-                    writer.WriteLine("Vidya Agarwal");
-                    writer.WriteLine("Mahesh Chand");
-                    writer.WriteLine("Vijay Anand");
-                    writer.WriteLine("Jignesh Trivedi");
-
+                    writer.Write(newString);
                     writer.Flush();
-                    writer.Close();
                 }
 
                 // TODO: return the reversed text
