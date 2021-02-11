@@ -3,3 +3,7 @@
 ################################################################################
 
 /ReverseText/obj
+/ReverseText.Tests/obj
+/ReverseText.Tests/bin/Debug/netcoreapp3.1
+/ReverseText/bin/Debug/netcoreapp3.1
+/.vs/ReverseText/v16
