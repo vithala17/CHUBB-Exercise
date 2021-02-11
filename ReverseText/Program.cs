@@ -38,7 +38,7 @@ namespace ReverseText
                     newString = String.Concat(revTextArray);
                 }
 
-                filePath = "OutputTextFile.txt";
+                // filePath = "OutputTextFile.txt";
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
                     //writer.Write(newString);
